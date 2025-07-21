@@ -4,6 +4,8 @@
     {
         public const string Required = "Required";
         public const string NotFound = "NotFound";
+        public const string EmailAlreadyExists = "EmailAlreadyExists";
+        public const string UserNameAlreadyExists = "UserNameAlreadyExists";
 
     }
 }
