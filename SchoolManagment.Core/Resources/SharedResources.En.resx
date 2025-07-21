@@ -123,4 +123,10 @@
   <data name="Required" xml:space="preserve">
     <value>This Field Is Required</value>
   </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>EmailAlreadyExists</value>
+  </data>
+  <data name="UserNameAlreadyExists" xml:space="preserve">
+    <value>UserNameAlreadyExists</value>
+  </data>
 </root>

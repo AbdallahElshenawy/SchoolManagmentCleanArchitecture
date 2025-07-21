@@ -20,13 +20,12 @@
         public static class DepartmentRouting
         {
             public const string prefix = rule + "Departments";
-            public const string Departments = prefix + "/List";
             public const string GetDepartmentById = prefix + "/{id}";
+        }
+        public static class UserRouting
+        {
+            public const string prefix = rule + "Users";
             public const string Create = prefix + "/Create";
-            public const string Edit = prefix + "/Edit";
-            public const string Delete = prefix + "/{id}";
-            public const string paginatedList = prefix + "/paginatedList";
-
         }
     }
 }

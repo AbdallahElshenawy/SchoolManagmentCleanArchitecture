@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 
 namespace SchoolManagment.Core.Features.Students.Queries.Handlers
 {
-    public class StudentQueryHandler(IStudentService studentService, IMapper mapper, IStringLocalizer<StudentQueryHandler> stringLocalizer) : ResponseHandler,
+    public class StudentQueryHandler(IStudentService studentService, IMapper mapper, IStringLocalizer<SharedResources> stringLocalizer) : ResponseHandler,
                                     IRequestHandler<GetStudentListQuery, Response<List<GetStudentListResponse>>>,
                                     IRequestHandler<GetStudentByIdQuery, Response<GetStudentResponse>>,
                                     IRequestHandler<GetStudentPaginatedListQuery, PaginatedResult<GetStudentPaginatedListResponse>>

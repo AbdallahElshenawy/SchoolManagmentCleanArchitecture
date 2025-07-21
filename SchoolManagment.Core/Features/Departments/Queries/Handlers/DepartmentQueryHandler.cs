@@ -2,17 +2,15 @@
 using MediatR;
 using Microsoft.Extensions.Localization;
 using SchoolManagment.Core.Bases;
-using SchoolManagment.Core.Features.Departments.Queries.Models;
-using SchoolManagment.Core.Features.Students.Queries.Handlers;
 using SchoolManagment.Core.Features.Students.Queries.Results;
 using SchoolManagment.Core.Resources;
 using SchoolManagment.Service.Abstracts;
+using GetDepartmentByIdQuery = SchoolManagment.Core.Features.Departments.Queries.Models.GetDepartmentByIdQuery;
 namespace SchoolManagment.Core.Features.Departments.Queries.Handlers
 {
-    public class DepartmentQueryHandler(IDepartmentService departmentService, IMapper mapper, IStringLocalizer<StudentQueryHandler> stringLocalizer) : ResponseHandler,
-        //IRequestHandler<GetDepartmentListQuery, Response<List<GetDepartmentListResponse>>>,
+    public class DepartmentQueryHandler(IDepartmentService departmentService, IMapper mapper, IStringLocalizer<SharedResources> stringLocalizer) : ResponseHandler,
         IRequestHandler<GetDepartmentByIdQuery, Response<GetDepartmentResponse>>
-    // IRequestHandler<GetDepartmentPaginatedListQuery, PaginatedResult<GetDepartmentPaginatedListResponse>>
+
     {
         public async Task<Response<GetDepartmentResponse>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
         {
