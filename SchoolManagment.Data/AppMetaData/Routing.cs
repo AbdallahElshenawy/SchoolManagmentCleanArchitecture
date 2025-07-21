@@ -26,6 +26,9 @@
         {
             public const string prefix = rule + "Users";
             public const string Create = prefix + "/Create";
+            public const string paginatedList = prefix + "/paginatedList";
+            public const string GetUserById = prefix + "/{id}";
+
         }
     }
 }
