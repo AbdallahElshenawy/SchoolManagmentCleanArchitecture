@@ -14,6 +14,7 @@ namespace SchoolManagment.Infrastructure
             services.AddTransient<ISubjectRepository, SubjectRepository>();
             services.AddTransient<IInstructorRepository, InstructorRepository>();
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
             return services;
         }
     }

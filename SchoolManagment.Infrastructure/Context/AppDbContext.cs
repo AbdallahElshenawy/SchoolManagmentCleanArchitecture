@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SchoolManagment.Data.Entities;
+using SchoolManagment.Data.Entities.Identity;
 
 namespace SchoolManagment.Infrastructure.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User>
     {
         public AppDbContext()
         {
@@ -17,6 +19,7 @@ namespace SchoolManagment.Infrastructure.Data
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<DepartmentSubject> DepartmentSubjects { get; set; }
         public DbSet<StudentSubject> StudentSubjects { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SchoolManagment.Core;
 using SchoolManagment.Core.Middleware;
+using SchoolManagment.Data.Entities.Identity;
 using SchoolManagment.Infrastructure;
 using SchoolManagment.Infrastructure.Data;
 using SchoolManagment.Service;
@@ -23,7 +25,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // extension methods for adding dependencies
 builder.Services.AddInfrastructureDependencies().AddModuleServiceDependencies().AddModuleCoreDependencies();
-
+builder.Services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 #region Localization
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "");
