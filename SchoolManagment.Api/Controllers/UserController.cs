@@ -26,5 +26,17 @@ namespace SchoolManagment.Api.Controllers
             var response = await mediator.Send(new GetUserByIdQuery(id));
             return NewResult(response);
         }
+        [HttpPut(UserRouting.Edit)]
+        public async Task<IActionResult> EditStudent(EditUserCommand command)
+        {
+            var response = await mediator.Send(command);
+            return Ok(response);
+        }
+        [HttpDelete(UserRouting.Delete)]
+        public async Task<IActionResult> DeleteStudentById(string id)
+        {
+            var response = await mediator.Send(new DeleteUserCommand(id));
+            return NewResult(response);
+        }
     }
 }

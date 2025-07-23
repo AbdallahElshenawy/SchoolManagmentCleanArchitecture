@@ -9,7 +9,9 @@ using SchoolManagment.Data.Entities.Identity;
 namespace SchoolManagment.Core.Features.Departments.Queries.Handlers
 {
     public class UserCommandHandler(IMapper mapper, IStringLocalizer<SharedResources> stringLocalizer, UserManager<User> userManager) : ResponseHandler,
-        IRequestHandler<AddUserCommand, Response<string>>
+        IRequestHandler<AddUserCommand, Response<string>>,
+        IRequestHandler<EditUserCommand, Response<string>>,
+        IRequestHandler<DeleteUserCommand, Response<string>>
 
     {
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
@@ -29,6 +31,30 @@ namespace SchoolManagment.Core.Features.Departments.Queries.Handlers
             if (!result.Succeeded)
                 return BadRequest<string>("Failed to create user");
             return Created("");
+        }
+
+        public async Task<Response<string>> Handle(EditUserCommand request, CancellationToken cancellationToken)
+        {
+            var user = await userManager.FindByIdAsync(request.Id);
+            if (user == null)
+                return NotFound<string>("User Not Found");
+            var newUser = mapper.Map(request, user);
+            var result = await userManager.UpdateAsync(newUser);
+            if (!result.Succeeded)
+                return BadRequest<string>();
+            return Success("User Updated Successfully");
+
+        }
+
+        public async Task<Response<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        {
+            var user = await userManager.FindByIdAsync(request.Id);
+            if (user == null)
+                return NotFound<string>("User Not Found");
+            var result = await userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                return BadRequest<string>("Delete User Failed");
+            return Success("User Deleted Successfully");
         }
     }
 }
