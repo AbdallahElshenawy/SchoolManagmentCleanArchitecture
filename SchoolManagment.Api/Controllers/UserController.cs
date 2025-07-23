@@ -27,16 +27,22 @@ namespace SchoolManagment.Api.Controllers
             return NewResult(response);
         }
         [HttpPut(UserRouting.Edit)]
-        public async Task<IActionResult> EditStudent(EditUserCommand command)
+        public async Task<IActionResult> EditUser(EditUserCommand command)
         {
             var response = await mediator.Send(command);
             return Ok(response);
         }
         [HttpDelete(UserRouting.Delete)]
-        public async Task<IActionResult> DeleteStudentById(string id)
+        public async Task<IActionResult> DeleteUserById(string id)
         {
             var response = await mediator.Send(new DeleteUserCommand(id));
             return NewResult(response);
+        }
+        [HttpPut(UserRouting.ChangePassword)]
+        public async Task<IActionResult> ChangeUserPassword(ChangeUserPasswordCommand command)
+        {
+            var response = await mediator.Send(command);
+            return Ok(response);
         }
     }
 }

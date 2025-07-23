@@ -11,7 +11,8 @@ namespace SchoolManagment.Core.Features.Departments.Queries.Handlers
     public class UserCommandHandler(IMapper mapper, IStringLocalizer<SharedResources> stringLocalizer, UserManager<User> userManager) : ResponseHandler,
         IRequestHandler<AddUserCommand, Response<string>>,
         IRequestHandler<EditUserCommand, Response<string>>,
-        IRequestHandler<DeleteUserCommand, Response<string>>
+        IRequestHandler<DeleteUserCommand, Response<string>>,
+        IRequestHandler<ChangeUserPasswordCommand, Response<string>>
 
     {
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
@@ -55,6 +56,21 @@ namespace SchoolManagment.Core.Features.Departments.Queries.Handlers
             if (!result.Succeeded)
                 return BadRequest<string>("Delete User Failed");
             return Success("User Deleted Successfully");
+        }
+
+        public async Task<Response<string>> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
+        {
+            var user = await userManager.FindByIdAsync(request.Id);
+            if (user == null)
+                return NotFound<string>("User Not Found");
+            var result = await userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+            if (!result.Succeeded)
+            {
+                var errorMessage = result.Errors.FirstOrDefault()?.Description ?? "Failed to change password";
+                return BadRequest<string>(errorMessage);
+            }
+            return Success("Password Changed Successfully");
+
         }
     }
 }
