@@ -53,6 +53,11 @@
             public const string GetUserRoles = Roles + "/GetUserRoles";
             public const string EditUserRoles = Roles + "/EditUserRoles";
             public const string ManageUserClaims = Claims + "/ManageUserClaims";
+        }
+        public static class EmailsRoute
+        {
+            public const string prefix = rule + "EmailsRoute";
+            public const string SendEmail = prefix + "/SendEmail";
 
         }
     }
