@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolManagment.Core.Features.Students.Commands.Models;
 using SchoolManagment.Core.Features.Students.Queries.Models;
@@ -7,6 +8,7 @@ using static SchoolManagment.Data.AppMetaData.Routing;
 namespace SchoolManagment.Api.Controllers
 {
     [ApiController]
+    [Authorize(Roles = "Admin,User")]
     public class StudentController(IMediator mediator) : BaseController(mediator)
     {
         [HttpGet(StudentRouting.GetStudents)]
@@ -27,18 +29,21 @@ namespace SchoolManagment.Api.Controllers
             var response = await mediator.Send(new GetStudentByIdQuery() { Id = id });
             return NewResult(response);
         }
+        [Authorize(Policy = "CreateStudent")]
         [HttpPost(StudentRouting.Create)]
         public async Task<IActionResult> CreatStudent(AddStudentCommand command)
         {
             var response = await mediator.Send(command);
             return NewResult(response);
         }
+        [Authorize(Policy = "EditStudent")]
         [HttpPut(StudentRouting.Edit)]
         public async Task<IActionResult> EditStudent(EditStudentCommand command)
         {
             var response = await mediator.Send(command);
             return Ok(response);
         }
+        [Authorize(Policy = "DeleteStudent")]
         [HttpDelete(StudentRouting.Delete)]
         public async Task<IActionResult> DeleteStudentById(int id)
         {

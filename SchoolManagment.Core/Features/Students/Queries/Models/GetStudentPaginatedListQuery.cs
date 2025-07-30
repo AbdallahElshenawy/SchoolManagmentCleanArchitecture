@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SchoolManagment.Core.Extensions;
 using SchoolManagment.Core.Features.Students.Queries.Results;
-using SchoolManagment.Data.Helper;
+using SchoolManagment.Data.Enums;
 
 namespace SchoolManagment.Core.Features.Students.Queries.Models
 {
