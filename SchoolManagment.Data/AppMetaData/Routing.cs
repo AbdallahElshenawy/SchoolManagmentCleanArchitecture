@@ -32,7 +32,27 @@
             public const string ChangePassword = prefix + "/ChangePassword";
             public const string Delete = prefix + "/{id}";
 
-
+        }
+        public static class AuthRouting
+        {
+            public const string prefix = rule + "Authentication";
+            public const string SignIn = prefix + "/SignIn";
+            public const string RefreshToken = prefix + "/RefreshToken";
+            public const string ValidateToken = prefix + "/ValidateToken";
+        }
+        public static class AuthorizationRouting
+        {
+            public const string Prefix = rule + "Authorization";
+            public const string Roles = Prefix + "/Roles";
+            public const string Claims = Prefix + "/Claims";
+            public const string Create = Roles + "/Create";
+            public const string Edit = Roles + "/Edit";
+            public const string Delete = Roles + "/ Delete";
+            public const string GetRolesList = Roles + "/GetRolesList";
+            public const string GetRoleById = Roles + "/GetRoleById";
+            public const string GetUserRoles = Roles + "/GetUserRoles";
+            public const string EditUserRoles = Roles + "/EditUserRoles";
+            public const string ManageUserClaims = Claims + "/ManageUserClaims";
 
         }
     }

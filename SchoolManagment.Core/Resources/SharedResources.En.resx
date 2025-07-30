@@ -129,4 +129,19 @@
   <data name="UserNameAlreadyExists" xml:space="preserve">
     <value>UserNameAlreadyExists</value>
   </data>
+  <data name="AlgorithmIsWrong" xml:space="preserve">
+    <value>AlgorithmIsWrong</value>
+  </data>
+  <data name="TokenIsNotExpired" xml:space="preserve">
+    <value>TokenIsNotExpired</value>
+  </data>
+  <data name="RefreshTokenIsNotFound" xml:space="preserve">
+    <value>RefreshTokenIsNotFound</value>
+  </data>
+  <data name="RefreshTokenIsExpired" xml:space="preserve">
+    <value>RefreshTokenIsExpired</value>
+  </data>
+  <data name="TokenIsExpired" xml:space="preserve">
+    <value>TokenIsExpired</value>
+  </data>
 </root>

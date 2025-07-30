@@ -1,4 +1,4 @@
-﻿namespace SchoolManagment.Data.Helper
+﻿namespace SchoolManagment.Data.Enums
 {
     public enum StudentOrderingEnum
     {

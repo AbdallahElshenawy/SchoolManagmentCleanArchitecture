@@ -31,6 +31,7 @@ namespace SchoolManagment.Core.Features.Departments.Queries.Handlers
             var result = await userManager.CreateAsync(newUser, request.Password);
             if (!result.Succeeded)
                 return BadRequest<string>("Failed to create user");
+            await userManager.AddToRoleAsync(newUser, "User");
             return Created("");
         }
 

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolManagment.Core.Features.Users.Commands.Models;
 using SchoolManagment.Core.Features.Users.Queries.Models;
@@ -6,6 +7,7 @@ using static SchoolManagment.Data.AppMetaData.Routing;
 namespace SchoolManagment.Api.Controllers
 {
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class UserController(IMediator mediator) : BaseController(mediator)
     {
         [HttpPost(UserRouting.Create)]
