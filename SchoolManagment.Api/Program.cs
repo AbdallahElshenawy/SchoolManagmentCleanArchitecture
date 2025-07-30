@@ -69,6 +69,10 @@ builder.Services.AddInfrastructureDependencies().AddModuleServiceDependencies().
 builder.Services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+//builder.Services.AddSingleton(jwtSettings);
+
 // Policy for authorization
 builder.Services.AddAuthorization(option =>
 {
@@ -141,6 +145,7 @@ builder.Services.AddCors(options =>
     });
 });
 var app = builder.Build();
+#region seed data
 using (var scope = app.Services.CreateScope())
 {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
@@ -148,6 +153,7 @@ using (var scope = app.Services.CreateScope())
     await RoleSeeder.SeedAsync(roleManager);
     await UserSeeder.SeedAsync(userManager);
 }
+#endregion
 
 // Configure the HTTP request pipeline.  
 if (app.Environment.IsDevelopment())
