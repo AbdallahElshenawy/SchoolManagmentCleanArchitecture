@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using SchoolManagment.Core.Bases;
 using SchoolManagment.Core.Features.Users.Commands.Models;
 using SchoolManagment.Core.Resources;
 using SchoolManagment.Data.Entities.Identity;
+using SchoolManagment.Service.Abstracts;
 namespace SchoolManagment.Core.Features.Departments.Queries.Handlers
 {
-    public class UserCommandHandler(IMapper mapper, IStringLocalizer<SharedResources> stringLocalizer, UserManager<User> userManager) : ResponseHandler,
+    public class UserCommandHandler(IMapper mapper, IStringLocalizer<SharedResources> stringLocalizer,
+        UserManager<User> userManager, IHttpContextAccessor httpContext, IUserService userService) : ResponseHandler,
         IRequestHandler<AddUserCommand, Response<string>>,
         IRequestHandler<EditUserCommand, Response<string>>,
         IRequestHandler<DeleteUserCommand, Response<string>>,
@@ -17,22 +20,17 @@ namespace SchoolManagment.Core.Features.Departments.Queries.Handlers
     {
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await userManager.FindByEmailAsync(request.Email);
-            if (user != null)
+            var user = mapper.Map<User>(request);
+            var newUser = await userService.AddUserAsync(user, request.Password);
+            switch (newUser)
             {
-                return BadRequest<string>(stringLocalizer[SharedResourcesKeys.EmailAlreadyExists]);
+                case "EmailIsExist": return BadRequest<string>("EmailIsExist");
+                case "UserNameIsExist": return BadRequest<string>("UserNameIsExist");
+                case "ErrorInCreateUser": return BadRequest<string>("FaildToAddUser");
+                case "Failed": return BadRequest<string>("TryToRegisterAgain");
+                case "Success": return Success<string>("");
+                default: return BadRequest<string>(newUser);
             }
-            var userName = await userManager.FindByNameAsync(request.UserName);
-            if (userName != null)
-            {
-                return BadRequest<string>(stringLocalizer[SharedResourcesKeys.UserNameAlreadyExists]);
-            }
-            var newUser = mapper.Map<User>(request);
-            var result = await userManager.CreateAsync(newUser, request.Password);
-            if (!result.Succeeded)
-                return BadRequest<string>("Failed to create user");
-            await userManager.AddToRoleAsync(newUser, "User");
-            return Created("");
         }
 
         public async Task<Response<string>> Handle(EditUserCommand request, CancellationToken cancellationToken)

@@ -6,10 +6,11 @@ namespace SchoolManagment.Service.Abstracts
 {
     public interface IAuthenticationService
     {
-        public Task<JwtAuthResult> GetJWTToken(User user);
-        public JwtSecurityToken ReadJWTToken(string accessToken);
-        public Task<(string, DateTime?)> ValidateDetails(JwtSecurityToken jwtToken, string AccessToken, string RefreshToken);
-        public Task<JwtAuthResult> GetRefreshToken(User user, JwtSecurityToken jwtToken, DateTime? expiryDate, string refreshToken);
-        public Task<string> ValidateToken(string AccessToken);
+        Task<JwtAuthResult> GetJWTToken(User user);
+        JwtSecurityToken ReadJWTToken(string accessToken);
+        Task<(string, DateTime?)> ValidateDetails(JwtSecurityToken jwtToken, string AccessToken, string RefreshToken);
+        Task<JwtAuthResult> GetRefreshToken(User user, JwtSecurityToken jwtToken, DateTime? expiryDate, string refreshToken);
+        Task<string> ValidateToken(string AccessToken);
+        Task<string> ConfirmEmail(string userId, string code);
     }
 }

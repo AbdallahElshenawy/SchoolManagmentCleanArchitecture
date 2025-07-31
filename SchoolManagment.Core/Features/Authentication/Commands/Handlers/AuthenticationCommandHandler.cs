@@ -21,13 +21,14 @@ namespace SchoolManagment.Core.Features.Authentication.Commands.Handlers
             if (user == null)
                 return BadRequest<JwtAuthResult>("User not found.");
             var result = await signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+            if (!user.EmailConfirmed)
+                return BadRequest<JwtAuthResult>("Please confirm your email.");
             if (!result.Succeeded)
             {
                 return BadRequest<JwtAuthResult>("Invalid user name or password.");
             }
             var accessToken = await authenticationService.GetJWTToken(user);
             return Success(accessToken);
-
 
         }
 

@@ -39,6 +39,7 @@
             public const string SignIn = prefix + "/SignIn";
             public const string RefreshToken = prefix + "/RefreshToken";
             public const string ValidateToken = prefix + "/ValidateToken";
+            public const string ConfirmEmail = prefix + "/ConfirmEmail";
         }
         public static class AuthorizationRouting
         {
