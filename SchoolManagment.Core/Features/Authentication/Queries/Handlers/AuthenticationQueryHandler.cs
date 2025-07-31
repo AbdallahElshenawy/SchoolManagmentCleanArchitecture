@@ -8,7 +8,8 @@ namespace SchoolManagment.Core.Features.Authentication.Queries.Handlers
 {
     public class AuthenticationQueryHandler(IStringLocalizer<SharedResources> stringLocalizer,
         IAuthenticationService authenticationService) : ResponseHandler,
-        IRequestHandler<AuthorizeUserQuery, Response<string>>
+        IRequestHandler<AuthorizeUserQuery, Response<string>>,
+        IRequestHandler<ConfirmEmailQuery, Response<string>>
     {
         public async Task<Response<string>> Handle(AuthorizeUserQuery request, CancellationToken cancellationToken)
         {
@@ -16,6 +17,14 @@ namespace SchoolManagment.Core.Features.Authentication.Queries.Handlers
             if (result == "NotExpired")
                 return Success(result);
             return Unauthorized<string>(stringLocalizer[SharedResourcesKeys.TokenIsExpired]);
+        }
+
+        public async Task<Response<string>> Handle(ConfirmEmailQuery request, CancellationToken cancellationToken)
+        {
+            var confirmEmail = await authenticationService.ConfirmEmail(request.UserId, request.Code);
+            if (confirmEmail == "ErrorWhenConfirmEmail")
+                return BadRequest<string>("ErrorWhenConfirmEmail");
+            return Success<string>("ConfirmEmailDone");
         }
     }
 }

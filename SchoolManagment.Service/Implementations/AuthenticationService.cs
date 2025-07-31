@@ -171,6 +171,16 @@ namespace SchoolManagment.Service.Implementations
             var expirydate = userRefreshToken.ExpireAt;
             return (userId, expirydate);
         }
+        public async Task<string> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+                return "ErrorWhenConfirmEmail";
+            var user = await userManager.FindByIdAsync(userId);
+            var confirmEmail = await userManager.ConfirmEmailAsync(user, code);
+            if (!confirmEmail.Succeeded)
+                return "ErrorWhenConfirmEmail";
+            return "Success";
+        }
 
 
     }
