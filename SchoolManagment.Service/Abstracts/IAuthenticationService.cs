@@ -12,5 +12,8 @@ namespace SchoolManagment.Service.Abstracts
         Task<JwtAuthResult> GetRefreshToken(User user, JwtSecurityToken jwtToken, DateTime? expiryDate, string refreshToken);
         Task<string> ValidateToken(string AccessToken);
         Task<string> ConfirmEmail(string userId, string code);
+        Task<string> SendResetPasswordCode(string email);
+        Task<string> ConfirmResetPassword(string Code, string Email);
+        Task<string> ResetPassword(string Email, string Password);
     }
 }

@@ -13,7 +13,9 @@ namespace SchoolManagment.Core.Features.Authentication.Commands.Handlers
     public class AuthenticationCommandHandler(UserManager<User> userManager, SignInManager<User> signInManager, IStringLocalizer<SharedResources> stringLocalizer,
         IAuthenticationService authenticationService) : ResponseHandler,
         IRequestHandler<SignInCommand, Response<JwtAuthResult>>,
-        IRequestHandler<RefreshTokenCommand, Response<JwtAuthResult>>
+        IRequestHandler<RefreshTokenCommand, Response<JwtAuthResult>>,
+        IRequestHandler<ResetPasswordCommand, Response<string>>,
+        IRequestHandler<SendResetPasswordCommand, Response<string>>
     {
         public async Task<Response<JwtAuthResult>> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
@@ -51,6 +53,16 @@ namespace SchoolManagment.Core.Features.Authentication.Commands.Handlers
             }
             var result = await authenticationService.GetRefreshToken(user, jwtToken, expiryDate, request.RefreshToken);
             return Success(result);
+        }
+
+        public Task<Response<string>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Response<string>> Handle(SendResetPasswordCommand request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
