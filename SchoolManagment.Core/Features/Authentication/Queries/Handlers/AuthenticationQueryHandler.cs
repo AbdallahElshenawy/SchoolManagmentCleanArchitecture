@@ -26,5 +26,16 @@ namespace SchoolManagment.Core.Features.Authentication.Queries.Handlers
                 return BadRequest<string>("ErrorWhenConfirmEmail");
             return Success<string>("ConfirmEmailDone");
         }
+        public async Task<Response<string>> Handle(ConfirmResetPasswordQuery request, CancellationToken cancellationToken)
+        {
+            var result = await authenticationService.ConfirmResetPassword(request.Code, request.Email);
+            switch (result)
+            {
+                case "UserNotFound": return BadRequest<string>("UserIsNotFound");
+                case "Failed": return BadRequest<string>("InvaildCode");
+                case "Success": return Success<string>("");
+                default: return BadRequest<string>("InvaildCode");
+            }
+        }
     }
 }

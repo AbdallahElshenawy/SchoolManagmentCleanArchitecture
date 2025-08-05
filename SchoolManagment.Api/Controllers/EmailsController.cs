@@ -10,7 +10,7 @@ namespace SchoolManagment.Api.Controllers
     [Authorize(Roles = "Admin")]
     public class EmailsController(IMediator mediator) : BaseController(mediator)
     {
-        [HttpPost(EmailsRoute.SendEmail)]
+        [HttpPost(Emails.SendEmail)]
         public async Task<IActionResult> SendEmail([FromQuery] SendEmailCommand command)
         {
             var response = await mediator.Send(command);

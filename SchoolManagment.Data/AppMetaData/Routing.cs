@@ -40,6 +40,9 @@
             public const string RefreshToken = prefix + "/RefreshToken";
             public const string ValidateToken = prefix + "/ValidateToken";
             public const string ConfirmEmail = prefix + "/ConfirmEmail";
+            public const string SendResetPasswordCode = prefix + "/SendResetPasswordCode";
+            public const string ConfirmResetPasswordCode = prefix + "/ConfirmResetPasswordCode";
+            public const string ResetPassword = prefix + "/ResetPassword";
         }
         public static class AuthorizationRouting
         {
@@ -55,9 +58,9 @@
             public const string EditUserRoles = Roles + "/EditUserRoles";
             public const string ManageUserClaims = Claims + "/ManageUserClaims";
         }
-        public static class EmailsRoute
+        public static class Emails
         {
-            public const string prefix = rule + "EmailsRoute";
+            public const string prefix = rule + "Emails";
             public const string SendEmail = prefix + "/SendEmail";
 
         }

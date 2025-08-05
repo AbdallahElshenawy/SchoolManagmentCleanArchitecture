@@ -5,6 +5,7 @@ using SchoolManagment.Data.Entities.Identity;
 using SchoolManagment.Data.Helper;
 using SchoolManagment.Data.Results;
 using SchoolManagment.Infrastructure.Abstracts;
+using SchoolManagment.Infrastructure.Data;
 using SchoolManagment.Service.Abstracts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,7 +14,8 @@ using System.Text;
 
 namespace SchoolManagment.Service.Implementations
 {
-    public class AuthenticationService(JwtSettings jwtSettings, IRefreshTokenRepository refreshTokenRepository, UserManager<User> userManager) : IAuthenticationService
+    public class AuthenticationService(JwtSettings jwtSettings, IRefreshTokenRepository refreshTokenRepository,
+        UserManager<User> userManager, IEmailService emailService, AppDbContext context) : IAuthenticationService
     {
         public async Task<JwtAuthResult> GetJWTToken(User user)
         {
@@ -182,6 +184,58 @@ namespace SchoolManagment.Service.Implementations
             return "Success";
         }
 
+        public async Task<string> SendResetPasswordCode(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+                return "UserNotFound";
+            Random generateRandomNumber = new Random();
+            var code = generateRandomNumber.Next(100000, 999999).ToString("D6");
+            user.Code = code;
+            var result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                return "ErrorWhenSendResetPasswordCode";
+            }
+            var message = $"Your reset password code is {code}.";
+            await emailService.SendEmail(user.Email, message, "Reset Password Code");
+            return "Success";
+        }
 
+        public async Task<string> ConfirmResetPassword(string Code, string Email)
+        {
+            var user = await userManager.FindByEmailAsync(Email);
+
+            if (user == null)
+                return "UserNotFound";
+
+            var userCode = user.Code;
+
+            if (userCode == Code) return "Success";
+            return "Failed";
+        }
+        public async Task<string> ResetPassword(string Email, string Password)
+        {
+            var trans = await context.Database.BeginTransactionAsync();
+            try
+            {
+                var user = await userManager.FindByEmailAsync(Email);
+
+                if (user == null)
+                    return "UserNotFound";
+                await userManager.RemovePasswordAsync(user);
+                if (!await userManager.HasPasswordAsync(user))
+                {
+                    await userManager.AddPasswordAsync(user, Password);
+                }
+                await trans.CommitAsync();
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                await trans.RollbackAsync();
+                return "Failed";
+            }
+        }
     }
 }
