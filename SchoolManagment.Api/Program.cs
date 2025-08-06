@@ -148,6 +148,7 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+
 var app = builder.Build();
 #region seed data
 using (var scope = app.Services.CreateScope())
@@ -173,6 +174,7 @@ app.UseRequestLocalization(options.Value);
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 

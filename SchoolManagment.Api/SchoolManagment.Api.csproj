@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -22,6 +22,10 @@
     <ProjectReference Include="..\SchoolManagment.Data\SchoolManagment.Data.csproj" />
     <ProjectReference Include="..\SchoolManagment.Infrastructure\SchoolManagment.Infrastructure.csproj" />
     <ProjectReference Include="..\SchoolManagment.Service\SchoolManagment.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

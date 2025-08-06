@@ -22,6 +22,11 @@
             public const string prefix = rule + "Departments";
             public const string GetDepartmentById = prefix + "/{id}";
         }
+        public static class InstructorRouting
+        {
+            public const string prefix = rule + "Instructors";
+            public const string Create = prefix + "/Create";
+        }
         public static class UserRouting
         {
             public const string prefix = rule + "Users";

@@ -28,6 +28,9 @@
     <Folder Include="Features\Email\Queries\Handlers\" />
     <Folder Include="Features\Email\Queries\Models\" />
     <Folder Include="Features\Email\Queries\Validations\" />
+    <Folder Include="Features\Instructors\Query\Handlers\" />
+    <Folder Include="Features\Instructors\Query\Models\" />
+    <Folder Include="Features\Instructors\Query\Validation\" />
     <Folder Include="Mapping\Departments\CommandMapping\" />
   </ItemGroup>
 
