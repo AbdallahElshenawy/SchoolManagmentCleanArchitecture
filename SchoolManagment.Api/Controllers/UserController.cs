@@ -11,7 +11,7 @@ namespace SchoolManagment.Api.Controllers
     public class UserController(IMediator mediator) : BaseController(mediator)
     {
         [HttpPost(UserRouting.Create)]
-        public async Task<IActionResult> CreatStudent(AddUserCommand command)
+        public async Task<IActionResult> CreatUser(AddUserCommand command)
         {
             var response = await mediator.Send(command);
             return NewResult(response);
