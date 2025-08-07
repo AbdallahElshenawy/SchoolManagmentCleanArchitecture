@@ -36,15 +36,14 @@ SchoolManagmentCleanArchitecture/
 
 ## 🔧 Technologies Used
 
-- **.NET 8**
-- **Entity Framework Core 8**
-- **MailKit** for email handling
-- **Serilog** for structured logging
-- **SQL Server**
-- **ASP.NET Core Web API**
-- **MediatR** for CQRS
-- **Clean Architecture + Dependency Injection**
-
+- ASP.NET Core 8 Web API
+- Entity Framework Core 8
+- MediatR
+- Serilog
+- MailKit
+- FluentValidation
+- AutoMapper
+- SQL Server
 ---
 
 ## 🛠️ How to Run
