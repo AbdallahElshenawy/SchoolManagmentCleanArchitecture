@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using SchoolManagment.Service.Abstracts;
 
 namespace SchoolManagment.Service.Implementations
 {
-    public class FileService(IHostEnvironment hostEnvironment) : IFileService
+    public class FileService(IHostEnvironment hostEnvironment, ILogger<FileService> logger) : IFileService
     {
         public async Task<string> UploadImage(string location, IFormFile file)
         {
@@ -31,13 +32,16 @@ namespace SchoolManagment.Service.Implementations
                         return $"/{location}/{fileName}";
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    logger.LogError(ex, "Failed to upload image to location: {Location}", location);
+
                     return "FailedToUploadImage";
                 }
             }
             else
             {
+                logger.LogWarning("Attempted to upload empty image file.");
                 return "NoImage";
             }
         }
