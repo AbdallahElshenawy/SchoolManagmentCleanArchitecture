@@ -1,11 +1,12 @@
 ﻿using MailKit.Net.Smtp;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using SchoolManagment.Data.Helper;
 using SchoolManagment.Service.Abstracts;
 namespace SchoolManagment.Service.Implementations
 {
-    public class EmailService(IOptions<EmailSettings> emailSettings) : IEmailService
+    public class EmailService(IOptions<EmailSettings> emailSettings, ILogger<EmailService> logger) : IEmailService
     {
         public async Task<string> SendEmail(string email, string Message, string? subject)
         {
@@ -30,10 +31,12 @@ namespace SchoolManagment.Service.Implementations
                     await client.SendAsync(message);
                     await client.DisconnectAsync(true);
                 }
+                logger.LogInformation("Email sent successfully to {Email}", email);
                 return "Success";
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Failed to send email to {Email}", email);
                 return "Failed";
             }
 

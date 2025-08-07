@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SchoolManagment.Core.Bases;
+using Serilog;
 using System.Net;
 using System.Text.Json;
 
@@ -10,7 +11,6 @@ namespace SchoolManagment.Core.Middleware
     public class ErrorHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-
         public ErrorHandlerMiddleware(RequestDelegate next)
         {
             _next = next;
@@ -32,6 +32,7 @@ namespace SchoolManagment.Core.Middleware
                     Succeeded = false,
                     Message = error?.Message
                 };
+                Log.Error(error, "Error Happend");
 
                 switch (error)
                 {

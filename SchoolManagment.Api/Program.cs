@@ -15,6 +15,7 @@ using SchoolManagment.Infrastructure.Data;
 using SchoolManagment.Infrastructure.Seeder;
 using SchoolManagment.Infrastructure.Seeder.UserSeeder;
 using SchoolManagment.Service;
+using Serilog;
 using System.Globalization;
 using System.Text;
 
@@ -148,6 +149,16 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+
+//Logging
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateLogger();
+builder.Services.AddSerilog();
+builder.Host.UseSerilog(); // Use Serilog instead of default logging
+
 
 var app = builder.Build();
 #region seed data

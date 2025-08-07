@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SchoolManagment.Data.Entities;
 using SchoolManagment.Data.Enums;
 using SchoolManagment.Infrastructure.Abstracts;
@@ -6,14 +7,17 @@ using SchoolManagment.Service.Abstracts;
 
 namespace SchoolManagment.Service.Implementations
 {
-    public class StudentService(IStudentRepository studentRepository) : IStudentService
+    public class StudentService(IStudentRepository studentRepository, ILogger<StudentService> logger) : IStudentService
     {
         public async Task<string> AddStudentAsync(Student student)
         {
             var studentDb = await studentRepository.GetTableAsTracking()
                  .Where(s => s.Name == student.Name).FirstOrDefaultAsync();
             if (studentDb != null)
+            {
+                logger.LogWarning("AddStudentAsync: Student already exists with name {StudentName}", student.Name);
                 return "Student already exists";
+            }
 
             await studentRepository.AddAsync(student);
             return "Student added successfully";
@@ -21,18 +25,21 @@ namespace SchoolManagment.Service.Implementations
 
         public async Task<string> DeleteStudentAsync(Student student)
         {
+            logger.LogInformation("Deleting student with ID: {StudentId}", student.StudID);
             await studentRepository.DeleteAsync(student);
             return "Success";
         }
 
         public async Task<string> EditStudentAsync(Student student)
         {
+            logger.LogInformation("Editing student with ID: {StudentId}", student.StudID);
             await studentRepository.UpdateAsync(student);
             return "Success";
         }
 
         public IQueryable<Student> FilterStudentPaginatedQuerable(string search, StudentOrderingEnum order)
         {
+            logger.LogInformation("Filtering students with search: {Search} and order: {Order}", search, order);
             var query = studentRepository.GetTableNoTracking()
                 .Include(s => s.Department)
                 .AsQueryable();
@@ -69,6 +76,8 @@ namespace SchoolManagment.Service.Implementations
 
         public IQueryable<Student> GetStudentsAsQuerable()
         {
+            logger.LogInformation("Fetching all students as queryable with department info.");
+
             return studentRepository.GetTableNoTracking().Include(s => s.Department).AsQueryable();
         }
 
