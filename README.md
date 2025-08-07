@@ -9,25 +9,28 @@ This is a modular and scalable School Management System built with **ASP.NET Cor
 ```
 SchoolManagmentCleanArchitecture/
 │
-├── SchoolManagment.Api/            # API project (Presentation Layer)
-├── SchoolManagment.Service/        # Application logic and business rules
-├── SchoolManagment.Infrastructure/ # Infrastructure (DB, Email, Logging)
-├── SchoolManagment.Data/           # Entities, DTOs, Enums
+├── SchoolManagment.Api/             # Presentation Layer (ASP.NET Core Web API)
+├── SchoolManagment.Core/            # Core Layer (CQRS, MediatR, Validation, Localization)
+├── SchoolManagment.Service/         # Application Logic Layer (Services, Business Rules)
+├── SchoolManagment.Infrastructure/  # Infrastructure Layer (EF Core, Email)
+├── SchoolManagment.Data/            # Data Layer (Entities, DTOs, Enums, Seeders)
 ```
+
 
 ---
 
 ## 🚀 Features
 
-- 🧪 Clean Architecture (Domain, Application, Infrastructure, API)
-- 🧾 Logging using Serilog with SQL Sink
-- 📧 Email Confirmation via SMTP (MailKit)
-- 📥 File Upload (with image saving to `wwwroot`)
-- 🔐 JWT Authentication & Role-Based Access
-- 🔁 CQRS (Command Query Responsibility Segregation)
-- 🧩 MediatR for decoupled request/response handling
-- 📦 Entity Framework Core 8 for data access
-- 🛡️ Security best practices (token expiration, refresh tokens)
+- 🧠 **Clean Architecture** with clear separation between layers
+- 🧾 **Logging** using Serilog with **Console** and **SQL Server Sink**
+- 📧 **Email Sending** using MailKit (SMTP)
+- 📂 **File Upload** support (stored in `wwwroot`)
+- 🔐 **JWT Authentication** and **Role-Based Authorization**
+- 🔁 **CQRS** (Command Query Responsibility Segregation)
+- 📬 **MediatR** for decoupled request/response handling
+- 🧩 **Entity Framework Core 8** with SQL Server
+- 🌐 **Global Exception Handling Middleware**
+- 🌍 **Localization** with resource files
 
 ---
 
